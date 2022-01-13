@@ -1,0 +1,13 @@
+#board {
+  height: 400px;
+  width: 400px;
+  background-color: cyan;
+}
+#player {
+  height: 40px;
+  width: 40px;
+  background-color: red;
+  position: relative;
+  left: 80px;
+  top: 80px;
+}
