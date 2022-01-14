@@ -6,10 +6,13 @@ let leftButton = document.getElementById("left");
 let rightButton = document.getElementById("right");
 
 function moveUp() {
-  let positionPlayer = parseInt(player.style.top);
-  console.log(player.style.top);
-  //   console.log(player.style.top + 40);
-  player.style.top = `${player.style.top + 40}px`;
-}
-// ${player.style.top + 40}px"
+
+  let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"))
+  console.log(playerTop)
+  console.log(typeof playerTop)
+  playerTop = playerTop - 40;
+  console.log(playerTop)
+  player.style.top = `${playerTop}px`; 
+  }
+  
 upButton.addEventListener("click", moveUp);
