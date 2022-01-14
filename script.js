@@ -13,6 +13,20 @@ function moveUp() {
   playerTop = playerTop - 40;
   console.log(playerTop)
   player.style.top = `${playerTop}px`; 
-  }
   
-upButton.addEventListener("click", moveUp);
+}
+
+document.body.addEventListener('keydown', (e) => {
+  const key = event.key
+  switch (key) {
+    case "ArrowUp":
+    moveUp()
+    break; 
+    default:
+    console.log("nope");
+    break;
+  }
+})
+
+// upButton.addEventListener("click", moveUp);
+
