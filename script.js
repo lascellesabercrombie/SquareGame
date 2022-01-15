@@ -65,7 +65,23 @@ function yLimitAlert() {
 }
 
 function animateObstacle() {
+obstacle1.classList.add("visible")
 obstacle1.classList.add("animated")
+}
+
+function collisionAlert () {
+  let obstacleX = parseInt(
+    window.getComputedStyle(obstacle1).getPropertyValue("left"));
+  let obstacleY = parseInt(
+    window.getComputedStyle(obstacle1).getPropertyValue("top"));
+  console.log(obstacleX);
+  console.log(obstacleY);
+  if (obstacleY > yCoordinate - 40 && obstacleY < yCoordinate && obstacleX > xCoordinate - 60 && obstacleX <= xCoordinate) {
+  
+    alert.textContent = `game over`
+    obstacle1.classList.remove("animated")
+    obstacle1.classList.remove("visible")
+  }
 }
 
 document.body.addEventListener("keydown", (e) => {
@@ -93,6 +109,7 @@ document.body.addEventListener("keydown", (e) => {
   }
 });
 
+setInterval(collisionAlert, 10)
 
 startButton.addEventListener("click", animateObstacle)
 
