@@ -11,3 +11,26 @@
   left: 0px;
   top: 0px;
 }
+
+.obstacle{
+  height: 60px;
+  width: 60px;
+  background-color: blue;
+  position: relative;
+  top: 360px;
+  display: none;
+}
+
+.animated {
+    display: block;
+    animation: 3s infinite slideUp;
+}
+
+@keyframes slideUp {
+  from {
+    top: 300px;
+  }
+  to {
+    top: -120px;
+  }
+}
