@@ -45,6 +45,7 @@ function xLimitAlert() {
     player.style.left = "360px";
     alert.textContent = `you can't go further.`;
   }
+  else {alert.textContent = null;}
   console.log(xCoordinate, yCoordinate);
 }
 function yLimitAlert() {
@@ -57,6 +58,7 @@ function yLimitAlert() {
     player.style.top = "360px";
     alert.textContent = `you can't go further.`;
   }
+  else {alert.textContent = null;}
   console.log(xCoordinate, yCoordinate);
 }
 
