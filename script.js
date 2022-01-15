@@ -1,6 +1,8 @@
 let player = document.getElementById("player");
 let board = document.getElementById("board");
+let obstacle1 = document.getElementById("obstacle1")
 
+let startButton = document.getElementById("start")
 let upButton = document.getElementById("up");
 let downButton = document.getElementById("down");
 let leftButton = document.getElementById("left");
@@ -62,6 +64,10 @@ function yLimitAlert() {
   console.log(xCoordinate, yCoordinate);
 }
 
+function animateObstacle() {
+obstacle1.classList.add("animated")
+}
+
 document.body.addEventListener("keydown", (e) => {
   const key = e.key;
   switch (key) {
@@ -86,6 +92,9 @@ document.body.addEventListener("keydown", (e) => {
       break;
   }
 });
+
+
+startButton.addEventListener("click", animateObstacle)
 
 upButton.addEventListener("click", () => {
   moveUp();
