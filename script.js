@@ -67,15 +67,19 @@ document.body.addEventListener("keydown", (e) => {
   switch (key) {
     case "ArrowUp":
       moveUp();
+      yLimitAlert();
       break;
     case "ArrowDown":
       moveDown();
+      yLimitAlert();
       break;
     case "ArrowLeft":
       moveLeft();
+      xLimitAlert();
       break;
     case "ArrowRight":
       moveRight();
+      xLimitAlert();
       break;
     default:
       console.log("nope");
