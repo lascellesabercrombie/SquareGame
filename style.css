@@ -1,7 +1,13 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 #board {
   height: 400px;
   width: 400px;
   background-color: cyan;
+  margin: 10px;
 }
 #player {
   height: 40px;
@@ -10,4 +16,24 @@
   position: relative;
   left: 0px;
   top: 0px;
+  color: #fff;
+}
+
+.obstacle {
+  height: 40px;
+  width: 40px;
+  background-color: blue;
+  position: relative;
+  display: none;
+  color: #fff;
+}
+
+.animated {
+  animation: 10s infinite slideUp;
+}
+
+@keyframes slideUp {
+  to {
+    top: -40px;
+  }
 }

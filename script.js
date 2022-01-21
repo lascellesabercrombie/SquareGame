@@ -1,5 +1,9 @@
 let player = document.getElementById("player");
 let board = document.getElementById("board");
+let obstacle1 = document.getElementById("obstacle1");
+
+let startButton = document.getElementById("start");
+let stopButton = document.getElementById("stop");
 
 let upButton = document.getElementById("up");
 let downButton = document.getElementById("down");
@@ -44,9 +48,9 @@ function xLimitAlert() {
     xCoordinate = 360;
     player.style.left = "360px";
     alert.textContent = `you can't go further.`;
+  } else {
+    alert.textContent = null;
   }
-  else {alert.textContent = null;}
-  console.log(xCoordinate, yCoordinate);
 }
 function yLimitAlert() {
   if (yCoordinate < 40) {
@@ -57,9 +61,32 @@ function yLimitAlert() {
     yCoordinate = 360;
     player.style.top = "360px";
     alert.textContent = `you can't go further.`;
+  } else {
+    alert.textContent = null;
   }
-  else {alert.textContent = null;}
-  console.log(xCoordinate, yCoordinate);
+}
+
+function randomAnimateObstacle() {
+  obstacle1.style.top = `${Math.floor(Math.random() * 320)}px`;
+  obstacle1.style.left = `${Math.floor(Math.random() * 320)}px`;
+  console.log(Math.random() * 320 - 40);
+  obstacle1.style.display = `block`;
+  obstacle1.classList.add("animated");
+}
+
+function collisionAlert() {
+  let obstacleX = parseInt(
+    window.getComputedStyle(obstacle1).getPropertyValue("left")
+  );
+  let obstacleY = parseInt(
+    window.getComputedStyle(obstacle1).getPropertyValue("top")
+  );
+  // console.log(obstacleX, xCoordinate);
+  // if (obstacleX - xCoordinate < 40) {
+  //   alert.textContent = `game over`;
+  //   obstacle1.classList.remove("animated");
+  //   obstacle1.classList.remove("visible");
+  // }
 }
 
 document.body.addEventListener("keydown", (e) => {
@@ -67,20 +94,32 @@ document.body.addEventListener("keydown", (e) => {
   switch (key) {
     case "ArrowUp":
       moveUp();
+      yLimitAlert();
       break;
     case "ArrowDown":
       moveDown();
+      yLimitAlert();
       break;
     case "ArrowLeft":
       moveLeft();
+      xLimitAlert();
       break;
     case "ArrowRight":
       moveRight();
+      xLimitAlert();
       break;
     default:
       console.log("nope");
       break;
   }
+});
+
+setInterval(() => {
+  collisionAlert();
+}, 10);
+
+startButton.addEventListener("click", () => {
+  randomAnimateObstacle();
 });
 
 upButton.addEventListener("click", () => {
