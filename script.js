@@ -1,6 +1,7 @@
 let player = document.getElementById("player");
 let board = document.getElementById("board");
 let obstacle1 = document.getElementById("obstacle1");
+let obstacle2 = document.getElementById("obstacle2");
 
 let startButton = document.getElementById("start");
 let stopButton = document.getElementById("stop");
@@ -66,13 +67,21 @@ function yLimitAlert() {
   }
 }
 
-function randomAnimateObstacle() {
-  obstacle1.style.top = `${Math.floor(Math.random() * 320)}px`;
+function randomAnimateVerticalObstacle() {
+  obstacle1.style.top = `360px`;
   obstacle1.style.left = `${Math.floor(Math.random() * 320)}px`;
   console.log(Math.random() * 320 - 40);
   obstacle1.style.display = `block`;
-  obstacle1.classList.add("animated");
+  obstacle1.classList.add("animated-upwards");
 }
+
+function randomAnimateHorizontalObstacle() {
+  obstacle2.style.top = `${Math.floor(Math.random() * 320)}px`;
+  obstacle1.style.left = `360px`;
+  obstacle2.style.display = block;
+  obstacle2.classList.add("animated-right-to-left");
+}
+
 
 function collisionAlert() {
   let obstacleX = parseInt(
@@ -81,12 +90,12 @@ function collisionAlert() {
   let obstacleY = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("top")
   );
-  // console.log(obstacleX, xCoordinate);
-  // if (obstacleX - xCoordinate < 40) {
-  //   alert.textContent = `game over`;
-  //   obstacle1.classList.remove("animated");
-  //   obstacle1.classList.remove("visible");
-  // }
+  console.log(obstacleX, xCoordinate);
+  if (obstacleY > yCoordinate - 40 && obstacleY < yCoordinate && obstacleX > xCoordinate - 60 && obstacleX <= xCoordinate) {
+    alert.textContent = `game over`;
+    obstacle1.classList.remove("animated");
+    obstacle1.classList.remove("visible");
+  }
 }
 
 document.body.addEventListener("keydown", (e) => {
@@ -114,12 +123,15 @@ document.body.addEventListener("keydown", (e) => {
   }
 });
 
-setInterval(() => {
-  collisionAlert();
-}, 10);
+// setInterval(() => {
+//   collisionAlert();
+// }, 10);
 
 startButton.addEventListener("click", () => {
-  randomAnimateObstacle();
+  setTimeout(() => 
+  randomAnimateVerticalObstacle(), Math.floor(Math.random * 5000));
+  setTimeout(() => 
+  randomAnimateHorizontalObstacle(), Math.floor(Math.random * 5000))
 });
 
 upButton.addEventListener("click", () => {
