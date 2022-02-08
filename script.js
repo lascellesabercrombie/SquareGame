@@ -72,14 +72,12 @@ function randomAnimateVerticalObstacle() {
   obstacle1.style.left = `${Math.floor(Math.random() * 320)}px`;
   console.log(Math.random() * 320 - 40);
   obstacle1.style.display = `block`;
-  obstacle1.classList.add("animated-upwards");
 }
 
 function randomAnimateHorizontalObstacle() {
   obstacle2.style.top = `${Math.floor(Math.random() * 320)}px`;
-  obstacle1.style.left = `360px`;
+  obstacle2.style.left = `360px`;
   obstacle2.style.display = block;
-  obstacle2.classList.add("animated-right-to-left");
 }
 
 
@@ -90,12 +88,40 @@ function collisionAlert() {
   let obstacleY = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("top")
   );
-  console.log(obstacleX, xCoordinate);
+  // console.log(obstacleX, xCoordinate);
   if (obstacleY > yCoordinate - 40 && obstacleY < yCoordinate && obstacleX > xCoordinate - 60 && obstacleX <= xCoordinate) {
     alert.textContent = `game over`;
     obstacle1.classList.remove("animated");
     obstacle1.classList.remove("visible");
+    return true;
   }
+}
+
+let verticalInterval;
+
+function animate() {
+verticalInterval = setInterval(() => {
+  animateObstacles()
+}, 4000)
+}
+
+function stopAnimate() {
+  clearInterval(verticalInterval);
+  verticalInterval = null;
+}
+
+function animateObstacles() {
+  randomAnimateVerticalObstacle();
+    if(obstacle1.classList.contains("animated-upwards")){
+    obstacle1.classList.remove("animated-upwards")}
+    else{
+      obstacle1.classList.add("animated-upwards")
+    }
+}
+
+
+function stopObstacles() {
+obstacle1.classList.remove("animated-upwards");
 }
 
 document.body.addEventListener("keydown", (e) => {
@@ -123,16 +149,17 @@ document.body.addEventListener("keydown", (e) => {
   }
 });
 
-// setInterval(() => {
-//   collisionAlert();
-// }, 10);
+setInterval(() => {
+  collisionAlert();
+}, 10);
 
-startButton.addEventListener("click", () => {
-  setTimeout(() => 
-  randomAnimateVerticalObstacle(), Math.floor(Math.random * 5000));
-  setTimeout(() => 
-  randomAnimateHorizontalObstacle(), Math.floor(Math.random * 5000))
-});
+
+
+
+startButton.addEventListener("click", animateObstacles);
+startButton.addEventListener("click", animate);
+stopButton.addEventListener("click", stopAnimate);
+stopButton.addEventListener("click", stopObstacles);
 
 upButton.addEventListener("click", () => {
   moveUp();
