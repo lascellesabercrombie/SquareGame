@@ -76,7 +76,7 @@ function randomAnimateVerticalObstacle() {
 
 function randomAnimateHorizontalObstacle() {
   obstacle2.style.top = `${Math.floor(Math.random() * 320)}px`;
-  obstacle2.style.left = `360px`;
+  obstacle2.style.left = `400px`;
   obstacle2.style.display = `block`;
 }
 
@@ -97,24 +97,41 @@ function collisionAlert() {
 }
 
 let verticalInterval;
+let horizontalInterval;
 
 function animate() {
 verticalInterval = setInterval(() => {
-  animateObstacles()
+  animateVertical()
 }, 3000)
+horizontalInterval = setInterval(() => {
+  animateHorizontal()
+}, 4000)
 }
 
 function stopAnimate() {
   clearInterval(verticalInterval);
+  clearInterval(horizontalInterval);
   verticalInterval = null;
+  horizontalInterval = null;
 }
 
-function animateObstacles() {
+function animateVertical() {
   randomAnimateVerticalObstacle();
     if(obstacle1.classList.contains("animated-upwards")){
-    obstacle1.classList.remove("animated-upwards")}
+    obstacle1.classList.remove("animated-upwards");
+  }
     else{
-      obstacle1.classList.add("animated-upwards")
+      obstacle1.classList.add("animated-upwards");
+    }
+}
+
+function animateHorizontal() {
+  randomAnimateHorizontalObstacle();
+    if(obstacle2.classList.contains("animated-right-to-left")){
+    obstacle2.classList.remove("animated-right-to-left");
+  }
+    else{
+      obstacle2.classList.add("animated-right-to-left");
     }
 }
 
@@ -122,6 +139,8 @@ function animateObstacles() {
 function stopObstacles() {
 obstacle1.classList.remove("animated-upwards");
 obstacle1.style.display = `none`;
+obstacle2.classList.remove("animated-right-to-left");
+obstacle2.style.display = "none";
 }
 
 document.body.addEventListener("keydown", (e) => {
@@ -156,7 +175,7 @@ setInterval(() => {
 
 
 
-startButton.addEventListener("click", animateObstacles);
+startButton.addEventListener("click", animateVertical);
 startButton.addEventListener("click", animate);
 stopButton.addEventListener("click", stopAnimate);
 stopButton.addEventListener("click", stopObstacles);
