@@ -77,7 +77,7 @@ function randomAnimateVerticalObstacle() {
 function randomAnimateHorizontalObstacle() {
   obstacle2.style.top = `${Math.floor(Math.random() * 320)}px`;
   obstacle2.style.left = `360px`;
-  obstacle2.style.display = block;
+  obstacle2.style.display = `block`;
 }
 
 
@@ -92,7 +92,6 @@ function collisionAlert() {
   if (obstacleY > yCoordinate - 40 && obstacleY < yCoordinate && obstacleX > xCoordinate - 60 && obstacleX <= xCoordinate) {
     alert.textContent = `game over`;
     obstacle1.classList.remove("animated");
-    obstacle1.classList.remove("visible");
     return true;
   }
 }
@@ -102,7 +101,7 @@ let verticalInterval;
 function animate() {
 verticalInterval = setInterval(() => {
   animateObstacles()
-}, 4000)
+}, 3000)
 }
 
 function stopAnimate() {
@@ -122,6 +121,7 @@ function animateObstacles() {
 
 function stopObstacles() {
 obstacle1.classList.remove("animated-upwards");
+obstacle1.style.display = `none`;
 }
 
 document.body.addEventListener("keydown", (e) => {
