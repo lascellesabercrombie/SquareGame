@@ -35,7 +35,7 @@
 }
 
 .animated-right-to-left {
-  animation: 3s infinite slideLeft;
+  animation: 3s 1 slideLeft;
 }
 
 
@@ -53,6 +53,6 @@
     left: 300px;
   }
   to {
-    left: 0;
+    left: -40px;
   }
 }
