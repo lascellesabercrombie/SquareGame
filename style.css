@@ -29,7 +29,9 @@
 }
 
 .animated-upwards {
-  animation: 3s infinite slideUp;
+  animation-name: slideUp;
+  animation-duration: 4s; 
+  animation-iteration-count: 1;
 }
 
 .animated-right-to-left {
