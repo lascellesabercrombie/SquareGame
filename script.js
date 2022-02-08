@@ -12,6 +12,7 @@ let leftButton = document.getElementById("left");
 let rightButton = document.getElementById("right");
 
 let alert = document.querySelector(".alert");
+let timer = document.querySelector(".timer")
 
 let yCoordinate = parseInt(
   window.getComputedStyle(player).getPropertyValue("top")
@@ -135,6 +136,25 @@ function animateHorizontal() {
     }
 }
 
+let counter = 0;
+let perSecond;
+
+function scoreKeeper() {
+counter++;
+console.log(counter);
+timer.textContent = counter;
+}
+
+function scoreBySecond() {
+perSecond = setInterval(() => {
+scoreKeeper()
+}, 1000)}
+
+function stopScoring() {
+clearInterval(perSecond);
+perSecond = null;
+}
+
 
 function stopObstacles() {
 obstacle1.classList.remove("animated-upwards");
@@ -142,6 +162,11 @@ obstacle1.style.display = `none`;
 obstacle2.classList.remove("animated-right-to-left");
 obstacle2.style.display = "none";
 }
+
+setInterval(() => {
+  collisionAlert();
+}, 10);
+
 
 document.body.addEventListener("keydown", (e) => {
   const key = e.key;
@@ -168,17 +193,15 @@ document.body.addEventListener("keydown", (e) => {
   }
 });
 
-setInterval(() => {
-  collisionAlert();
-}, 10);
-
 
 
 
 startButton.addEventListener("click", animateVertical);
 startButton.addEventListener("click", animate);
+startButton.addEventListener("click", scoreBySecond);
 stopButton.addEventListener("click", stopAnimate);
 stopButton.addEventListener("click", stopObstacles);
+stopButton.addEventListener("click", stopScoring);
 
 upButton.addEventListener("click", () => {
   moveUp();
