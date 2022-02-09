@@ -1,3 +1,5 @@
+//variables from DOM
+
 let player = document.getElementById("player");
 let board = document.getElementById("board");
 let obstacle1 = document.getElementById("obstacle1");
@@ -16,6 +18,8 @@ let timer = document.querySelector(".timer");
 
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 let pokemonForm = document.querySelector("#pokemon-form");
+
+//Functions to choose player character
 
 function handlePlayer(picture, name) {
   document.querySelector("header").innerHTML = "";
@@ -57,6 +61,8 @@ function handleSubmit(e) {
 }
 
 pokemonForm.addEventListener("submit", handleSubmit);
+
+//Player location and movement
 
 let yCoordinate = parseInt(
   window.getComputedStyle(player).getPropertyValue("top")
@@ -112,6 +118,8 @@ function yLimitAlert() {
   }
 }
 
+//Obstacle functions
+
 function randomAnimateVerticalObstacle() {
   obstacle1.style.top = `360px`;
   obstacle1.style.left = `${Math.floor(Math.random() * 320)}px`;
@@ -124,6 +132,8 @@ function randomAnimateHorizontalObstacle() {
   obstacle2.style.left = `400px`;
   obstacle2.style.display = `block`;
 }
+
+//Collision
 
 function collisionAlert() {
   let obstacleX = parseInt(
@@ -144,6 +154,8 @@ function collisionAlert() {
     return true;
   }
 }
+
+//Animation of obstacles
 
 let verticalInterval;
 let horizontalInterval;
@@ -182,6 +194,8 @@ function animateHorizontal() {
   }
 }
 
+//Functions to keep score
+
 let counter = 0;
 let perSecond;
 
@@ -212,6 +226,8 @@ function stopObstacles() {
 setInterval(() => {
   collisionAlert();
 }, 10);
+
+//Event listeners
 
 document.body.addEventListener("keydown", (e) => {
   const key = e.key;
