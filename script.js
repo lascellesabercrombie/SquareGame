@@ -12,7 +12,51 @@ let leftButton = document.getElementById("left");
 let rightButton = document.getElementById("right");
 
 let alert = document.querySelector(".alert");
-let timer = document.querySelector(".timer")
+let timer = document.querySelector(".timer");
+
+let URL = "https://pokeapi.co/api/v2/pokemon/";
+let pokemonForm = document.querySelector("#pokemon-form");
+
+function handlePlayer(picture, name) {
+  document.querySelector("header").innerHTML = "";
+  let playerImg = document.createElement("img");
+  playerImg.src = picture;
+  player.append(playerImg);
+  let playerPokemon = document.createElement("span");
+  playerPokemon.innerText = `Your pokemon is "${name}"`;
+  document.querySelector("header").append(playerPokemon);
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  let pokemon = new FormData(pokemonForm);
+  let pokemonName = Object.fromEntries(pokemon);
+  let pokemonUrl = URL + pokemonName.name;
+  fetch(pokemonUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then((pokemonInfo) => {
+      let name = pokemonInfo.name;
+      let picture = pokemonInfo.sprites.front_default;
+      handlePlayer(picture, name);
+    })
+    .catch((error) => {
+      if (error.message === "404") {
+        document.querySelector(
+          "header"
+        ).innerText = `Can't find the "${pokemonName.name}"`;
+      } else {
+        console.error;
+        document.querySelector("header").innerText = `${error}`;
+      }
+    });
+}
+
+pokemonForm.addEventListener("submit", handleSubmit);
 
 let yCoordinate = parseInt(
   window.getComputedStyle(player).getPropertyValue("top")
@@ -81,7 +125,6 @@ function randomAnimateHorizontalObstacle() {
   obstacle2.style.display = `block`;
 }
 
-
 function collisionAlert() {
   let obstacleX = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("left")
@@ -90,7 +133,12 @@ function collisionAlert() {
     window.getComputedStyle(obstacle1).getPropertyValue("top")
   );
   // console.log(obstacleX, xCoordinate);
-  if (obstacleY > yCoordinate - 40 && obstacleY < yCoordinate && obstacleX > xCoordinate - 60 && obstacleX <= xCoordinate) {
+  if (
+    obstacleY > yCoordinate - 40 &&
+    obstacleY < yCoordinate &&
+    obstacleX > xCoordinate - 60 &&
+    obstacleX <= xCoordinate
+  ) {
     alert.textContent = `game over`;
     obstacle1.classList.remove("animated");
     return true;
@@ -101,12 +149,12 @@ let verticalInterval;
 let horizontalInterval;
 
 function animate() {
-verticalInterval = setInterval(() => {
-  animateVertical()
-}, 3000)
-horizontalInterval = setInterval(() => {
-  animateHorizontal()
-}, 4000)
+  verticalInterval = setInterval(() => {
+    animateVertical();
+  }, 3000);
+  horizontalInterval = setInterval(() => {
+    animateHorizontal();
+  }, 4000);
 }
 
 function stopAnimate() {
@@ -118,55 +166,52 @@ function stopAnimate() {
 
 function animateVertical() {
   randomAnimateVerticalObstacle();
-    if(obstacle1.classList.contains("animated-upwards")){
+  if (obstacle1.classList.contains("animated-upwards")) {
     obstacle1.classList.remove("animated-upwards");
+  } else {
+    obstacle1.classList.add("animated-upwards");
   }
-    else{
-      obstacle1.classList.add("animated-upwards");
-    }
 }
 
 function animateHorizontal() {
   randomAnimateHorizontalObstacle();
-    if(obstacle2.classList.contains("animated-right-to-left")){
+  if (obstacle2.classList.contains("animated-right-to-left")) {
     obstacle2.classList.remove("animated-right-to-left");
+  } else {
+    obstacle2.classList.add("animated-right-to-left");
   }
-    else{
-      obstacle2.classList.add("animated-right-to-left");
-    }
 }
 
 let counter = 0;
 let perSecond;
 
 function scoreKeeper() {
-counter++;
-console.log(counter);
-timer.textContent = counter;
+  counter++;
+  console.log(counter);
+  timer.textContent = counter;
 }
 
 function scoreBySecond() {
-perSecond = setInterval(() => {
-scoreKeeper()
-}, 1000)}
-
-function stopScoring() {
-clearInterval(perSecond);
-perSecond = null;
+  perSecond = setInterval(() => {
+    scoreKeeper();
+  }, 1000);
 }
 
+function stopScoring() {
+  clearInterval(perSecond);
+  perSecond = null;
+}
 
 function stopObstacles() {
-obstacle1.classList.remove("animated-upwards");
-obstacle1.style.display = `none`;
-obstacle2.classList.remove("animated-right-to-left");
-obstacle2.style.display = "none";
+  obstacle1.classList.remove("animated-upwards");
+  obstacle1.style.display = `none`;
+  obstacle2.classList.remove("animated-right-to-left");
+  obstacle2.style.display = "none";
 }
 
 setInterval(() => {
   collisionAlert();
 }, 10);
-
 
 document.body.addEventListener("keydown", (e) => {
   const key = e.key;
@@ -192,9 +237,6 @@ document.body.addEventListener("keydown", (e) => {
       break;
   }
 });
-
-
-
 
 startButton.addEventListener("click", animateVertical);
 startButton.addEventListener("click", animate);
