@@ -28,12 +28,31 @@
   color: #fff;
 }
 
-.animated {
-  animation: 10s infinite slideUp;
+.animated-upwards {
+  animation-name: slideUp;
+  animation-duration: 4s; 
+  animation-iteration-count: 1;
 }
 
+.animated-right-to-left {
+  animation: 3s 1 slideLeft;
+}
+
+
 @keyframes slideUp {
+  from {
+    top: 300px;
+  }
   to {
-    top: -40px;
+    top: -120px;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    left: 300px;
+  }
+  to {
+    left: -40px;
   }
 }

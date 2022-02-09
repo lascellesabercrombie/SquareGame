@@ -1,6 +1,7 @@
 let player = document.getElementById("player");
 let board = document.getElementById("board");
 let obstacle1 = document.getElementById("obstacle1");
+let obstacle2 = document.getElementById("obstacle2");
 
 let startButton = document.getElementById("start");
 let stopButton = document.getElementById("stop");
@@ -66,13 +67,19 @@ function yLimitAlert() {
   }
 }
 
-function randomAnimateObstacle() {
-  obstacle1.style.top = `${Math.floor(Math.random() * 320)}px`;
+function randomAnimateVerticalObstacle() {
+  obstacle1.style.top = `360px`;
   obstacle1.style.left = `${Math.floor(Math.random() * 320)}px`;
   console.log(Math.random() * 320 - 40);
   obstacle1.style.display = `block`;
-  obstacle1.classList.add("animated");
 }
+
+function randomAnimateHorizontalObstacle() {
+  obstacle2.style.top = `${Math.floor(Math.random() * 320)}px`;
+  obstacle2.style.left = `400px`;
+  obstacle2.style.display = `block`;
+}
+
 
 function collisionAlert() {
   let obstacleX = parseInt(
@@ -82,11 +89,58 @@ function collisionAlert() {
     window.getComputedStyle(obstacle1).getPropertyValue("top")
   );
   // console.log(obstacleX, xCoordinate);
-  // if (obstacleX - xCoordinate < 40) {
-  //   alert.textContent = `game over`;
-  //   obstacle1.classList.remove("animated");
-  //   obstacle1.classList.remove("visible");
-  // }
+  if (obstacleY > yCoordinate - 40 && obstacleY < yCoordinate && obstacleX > xCoordinate - 60 && obstacleX <= xCoordinate) {
+    alert.textContent = `game over`;
+    obstacle1.classList.remove("animated");
+    return true;
+  }
+}
+
+let verticalInterval;
+let horizontalInterval;
+
+function animate() {
+verticalInterval = setInterval(() => {
+  animateVertical()
+}, 3000)
+horizontalInterval = setInterval(() => {
+  animateHorizontal()
+}, 4000)
+}
+
+function stopAnimate() {
+  clearInterval(verticalInterval);
+  clearInterval(horizontalInterval);
+  verticalInterval = null;
+  horizontalInterval = null;
+}
+
+function animateVertical() {
+  randomAnimateVerticalObstacle();
+    if(obstacle1.classList.contains("animated-upwards")){
+    obstacle1.classList.remove("animated-upwards");
+  }
+    else{
+      obstacle1.classList.add("animated-upwards");
+    }
+}
+
+function animateHorizontal() {
+  randomAnimateHorizontalObstacle();
+    if(obstacle2.classList.contains("animated-right-to-left")){
+    obstacle2.classList.remove("animated-right-to-left");
+  }
+    else{
+      obstacle2.classList.add("animated-right-to-left");
+    }
+}
+
+
+function stopObstacles() {
+obstacle1.classList.remove("animated-upwards");
+obstacle1.style.display = `none`;
+obstacle2.classList.remove("animated-right-to-left");
+obstacle2.style.display = "none";
 }
 
 document.body.addEventListener("keydown", (e) => {
@@ -118,9 +172,13 @@ setInterval(() => {
   collisionAlert();
 }, 10);
 
-startButton.addEventListener("click", () => {
-  randomAnimateObstacle();
-});
+
+
+
+startButton.addEventListener("click", animateVertical);
+startButton.addEventListener("click", animate);
+stopButton.addEventListener("click", stopAnimate);
+stopButton.addEventListener("click", stopObstacles);
 
 upButton.addEventListener("click", () => {
   moveUp();
