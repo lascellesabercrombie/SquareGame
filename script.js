@@ -150,8 +150,8 @@ function collisionAlert() {
     obstacleX <= xCoordinate
   ) {
     alert.textContent = `game over`;
-    obstacle1.classList.remove("animated");
-    return true;
+    stopAnimate();
+    stopScoring();
   }
 }
 
