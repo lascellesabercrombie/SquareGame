@@ -23,6 +23,7 @@ let pokemonForm = document.querySelector("#pokemon-form");
 
 function handlePlayer(picture, name) {
   document.querySelector("header").innerHTML = "";
+  player.innerHTML = "";
   let playerImg = document.createElement("img");
   playerImg.src = picture;
   player.append(playerImg);
@@ -157,14 +158,14 @@ function collisionAlert() {
 
   // console.log(obstacleX, xCoordinate);
   if (
-    xCoordinate > obstacle1X - playerWidth &&
-    xCoordinate < obstacle1X + playerWidth &&
-    yCoordinate > obstacle1Y &&
-    yCoordinate < obstacle1Y + 80 ||
-    xCoordinate > obstacle2X - playerWidth &&
-    xCoordinate < obstacle2X + playerWidth &&
-    yCoordinate > obstacle2Y + 40 &&
-    yCoordinate < obstacle2Y + 120
+    (xCoordinate > obstacle1X - playerWidth &&
+      xCoordinate < obstacle1X + playerWidth &&
+      yCoordinate > obstacle1Y &&
+      yCoordinate < obstacle1Y + 80) ||
+    (xCoordinate > obstacle2X - playerWidth &&
+      xCoordinate < obstacle2X + playerWidth &&
+      yCoordinate > obstacle2Y + 40 &&
+      yCoordinate < obstacle2Y + 120)
   ) {
     alert.textContent = `game over`;
     stopAnimate();
