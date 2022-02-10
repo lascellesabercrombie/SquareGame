@@ -1,3 +1,5 @@
+//variables from DOM
+
 let player = document.getElementById("player");
 let board = document.getElementById("board");
 let obstacle1 = document.getElementById("obstacle1");
@@ -16,6 +18,8 @@ let timer = document.querySelector(".timer");
 
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 let pokemonForm = document.querySelector("#pokemon-form");
+
+//Functions to choose player character
 
 function handlePlayer(picture, name) {
   document.querySelector("header").innerHTML = "";
@@ -57,6 +61,8 @@ function handleSubmit(e) {
 }
 
 pokemonForm.addEventListener("submit", handleSubmit);
+
+//Player location and movement
 
 let yCoordinate = parseInt(
   window.getComputedStyle(player).getPropertyValue("top")
@@ -112,6 +118,8 @@ function yLimitAlert() {
   }
 }
 
+//Obstacle functions
+
 function randomAnimateVerticalObstacle() {
   obstacle1.style.top = `360px`;
   obstacle1.style.left = `${Math.floor(Math.random() * 320)}px`;
@@ -125,25 +133,46 @@ function randomAnimateHorizontalObstacle() {
   obstacle2.style.display = `block`;
 }
 
+//Collision
+
 function collisionAlert() {
-  let obstacleX = parseInt(
+  let obstacle1X = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("left")
   );
-  let obstacleY = parseInt(
+  let obstacle1Y = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("top")
   );
+  let obstacle2X = parseInt(
+    window.getComputedStyle(obstacle2).getPropertyValue("left")
+  );
+  let obstacle2Y = parseInt(
+    window.getComputedStyle(obstacle2).getPropertyValue("top")
+  );
+  let playerWidth = parseInt(
+    window.getComputedStyle(player).getPropertyValue("width")
+  );
+  let playerHeight = parseInt(
+    window.getComputedStyle(player).getPropertyValue("height")
+  );
+
   // console.log(obstacleX, xCoordinate);
   if (
-    obstacleY > yCoordinate - 40 &&
-    obstacleY < yCoordinate &&
-    obstacleX > xCoordinate - 60 &&
-    obstacleX <= xCoordinate
+    xCoordinate > obstacle1X - playerWidth &&
+    xCoordinate < obstacle1X + playerWidth &&
+    yCoordinate > obstacle1Y &&
+    yCoordinate < obstacle1Y + 80 ||
+    xCoordinate > obstacle2X - playerWidth &&
+    xCoordinate < obstacle2X + playerWidth &&
+    yCoordinate > obstacle2Y + 40 &&
+    yCoordinate < obstacle2Y + 120
   ) {
     alert.textContent = `game over`;
-    obstacle1.classList.remove("animated");
-    return true;
+    stopAnimate();
+    stopScoring();
   }
 }
+
+//Animation of obstacles
 
 let verticalInterval;
 let horizontalInterval;
@@ -182,6 +211,8 @@ function animateHorizontal() {
   }
 }
 
+//Functions to keep score
+
 let counter = 0;
 let perSecond;
 
@@ -212,6 +243,8 @@ function stopObstacles() {
 setInterval(() => {
   collisionAlert();
 }, 10);
+
+//Event listeners
 
 document.body.addEventListener("keydown", (e) => {
   const key = e.key;
