@@ -36,7 +36,7 @@ function handleSubmit(e) {
   e.preventDefault();
   let pokemon = new FormData(pokemonForm);
   let pokemonName = Object.fromEntries(pokemon);
-  let pokemonUrl = URL + pokemonName.name;
+  let pokemonUrl = URL + pokemonName.name.toLowerCase();
   fetch(pokemonUrl)
     .then((response) => {
       if (!response.ok) {
