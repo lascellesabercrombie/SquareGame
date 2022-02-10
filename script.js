@@ -136,18 +136,35 @@ function randomAnimateHorizontalObstacle() {
 //Collision
 
 function collisionAlert() {
-  let obstacleX = parseInt(
+  let obstacle1X = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("left")
   );
-  let obstacleY = parseInt(
+  let obstacle1Y = parseInt(
     window.getComputedStyle(obstacle1).getPropertyValue("top")
   );
+  let obstacle2X = parseInt(
+    window.getComputedStyle(obstacle2).getPropertyValue("left")
+  );
+  let obstacle2Y = parseInt(
+    window.getComputedStyle(obstacle2).getPropertyValue("top")
+  );
+  let playerWidth = parseInt(
+    window.getComputedStyle(player).getPropertyValue("width")
+  );
+  let playerHeight = parseInt(
+    window.getComputedStyle(player).getPropertyValue("height")
+  );
+
   // console.log(obstacleX, xCoordinate);
   if (
-    obstacleY > yCoordinate - 40 &&
-    obstacleY < yCoordinate &&
-    obstacleX > xCoordinate - 60 &&
-    obstacleX <= xCoordinate
+    xCoordinate > obstacle1X - playerWidth &&
+    xCoordinate < obstacle1X + playerWidth &&
+    yCoordinate > obstacle1Y &&
+    yCoordinate < obstacle1Y + 80 ||
+    xCoordinate > obstacle2X - playerWidth &&
+    xCoordinate < obstacle2X + playerWidth &&
+    yCoordinate > obstacle2Y + 40 &&
+    yCoordinate < obstacle2Y + 120
   ) {
     alert.textContent = `game over`;
     stopAnimate();
